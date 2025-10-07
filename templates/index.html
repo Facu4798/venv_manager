@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Webpage</title>
+</head>
+<body>
+    <h1>Welcome to your Flask Webpage!</h1>
+    <div style="border:1px solid #ccc; padding:16px; margin-top:24px; max-width:400px;">
+        <h2>Available Virtual Environments</h2>
+        {% if venvs %}
+            <ul>
+            {% for venv in venvs %}
+                <li>{{ venv }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No virtual environments found.</p>
+        {% endif %}
+    </div>
+
+    <div style="border:1px solid #eee; padding:16px; margin-top:24px; max-width:400px;">
+        <h2>Create a New Virtual Environment</h2>
+        <form method="POST" action="/">
+            <input type="text" name="venv_name" placeholder="Environment name" required style="padding:8px; width:70%;">
+            <button type="submit" style="padding:8px 16px;">Create</button>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul style="list-style:none; padding:0; margin-top:12px;">
+                {% for category, message in messages %}
+                    <li style="color: {% if category == 'error' %}red{% else %}green{% endif %};">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
